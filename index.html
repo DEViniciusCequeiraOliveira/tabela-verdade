@@ -67,12 +67,10 @@
 
         main {
             width: 100vw;
-            height: 100vh;
             display: flex;
             justify-content: center;
-
-            max-height: 180px;
             flex-wrap: wrap;
+            
         }
 
         .seletor {
@@ -114,7 +112,7 @@
         }
 
         .visualização {
-            height: 60px;
+
             width: 100vw;
             display: flex;
             justify-content: center;
@@ -123,7 +121,7 @@
             margin-top: 15px;
         }
 
-        .GerarTabela button {
+        .btn-gerar-tabela {
             display: inline-block;
             width: 300px;
             height: 40px;
@@ -142,12 +140,18 @@
             transition: all .35s;
         }
 
-        .GerarTabela button span {
+        article {
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .btn-gerar-tabela span {
             position: relative;
             z-index: 2;
         }
 
-        .GerarTabela button:after {
+        .btn-gerar-tabela:after {
             position: absolute;
             content: "";
             top: 0;
@@ -158,29 +162,28 @@
             transition: all .35s;
         }
 
-        .GerarTabela button:hover {
+        .btn-gerar-tabela:hover {
             color: #fff;
         }
 
-        .GerarTabela button:hover:after {
+        .btn-gerar-tabela:hover:after {
             width: 100%;
         }
 
         table {
-            width: 60%;
+            width: 70%;
             font-size: 90%;
-            margin: auto;
-            margin-top: 100px;
             border-collapse: separate;
             overflow: hidden;
             background-color: white;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            margin: 36px auto;
+            height: 0px;
         }
 
         th,
         td {
             padding: 15px;
-
             background-color: rgba(255, 255, 255, 0.2);
             color: #fff;
         }
@@ -244,10 +247,9 @@
 
         .rodape {
             width: 100%;
+            display: flex;  
             position: fixed;
-            display: flex;
-            bottom: 0;
-            left: 0;
+            bottom: 0px;
             font-size: 0.8rem;
             border: 2px solid #333;
             justify-content: space-around;
@@ -289,27 +291,25 @@
                 <button class="adicionar ad-conectivo">+</button>
             </div>
         </article>
+
         <div class="visualização">
             <div>
-                <input type="text" readonly class="progresso"></input>
+                <input type="text" readonly class="progresso">
                 <button class="excluir" onclick="Excluir()">
                     <span>X</span>
                 </button>
             </div>
-            <div class="GerarTabela">
-                <button class="GerarTabela btn-gerar-tabela">
-                    <span>Gerar Tabela Verdade<span>
-                </button>
-            </div>
+
+            <button class="GerarTabela btn-gerar-tabela">
+                <span>Gerar Tabela Verdade</span>
+            </button>
+
         </div>
 
         <table class="tabela">
-            <thead class="cabecalho">
-            </thead>
-            <tbody class="resultado">
-            </tbody>
+            <thead class="cabecalho"></thead>
+            <tbody class="resultado"></tbody>
         </table>
-
     </main>
 
     <footer class="rodape">
@@ -541,4 +541,5 @@
         }        
     </script>
 </body>
+
 </html>
