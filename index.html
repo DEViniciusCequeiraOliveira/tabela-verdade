@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-Br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela Verdade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 30px;
+        }
+
+        body {
+            background-color: #4191E1;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-content: center;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 1.1rem;
+            align-self: center;
+            font-weight: bold;
+            margin-bottom: 2%;
+            margin-right: 6%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 2%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        select {
+            width: 100%;
+            border-radius: 20px;
+            height: 40px;
+            box-shadow: 2px 2px 2px #313131;
+            font-size: 55%;
+            font-weight: bold;
+            text-align: center;
+
+        }
+
+        select option {
+            align-self: center;
+            font-size: 0.8rem;
+        }
+
+        article {
+            max-width: 420px;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            margin: 5%;
+        }
+
+        main {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+
+            max-height: 180px;
+            flex-wrap: wrap;
+        }
+
+        .seletor {
+            display: flex;
+        }
+
+        .adicionar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #000000;
+            background: transparent;
+            border: 2px solid #313131;
+            border-radius: 100%;
+            box-shadow: 2px 2px 2px#313131;
+            width: 36px;
+            height: 36px;
+            margin-left: 12px;
+        }
+
+        .adicionar:hover {
+            color: white;
+            background-color: #ffa500;
+        }
+
+        .progresso {
+            font-weight: bold;
+            text-align: center;
+            background-color: white;
+            border: 2px solid #313131;
+            font-size: 32px;
+            max-width: 450px;
+            padding: 14px 8px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            margin-top: 3%;
+        }
+
+        .visualização {
+            height: 60px;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+
+        .GerarTabela button {
+            display: inline-block;
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: sans-serif;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #474747;
+            color: #f5f5f5;
+            border: 2px solid #333;
+            letter-spacing: 2px;
+            text-align: center;
+            position: relative;
+            transition: all .35s;
+        }
+
+        .GerarTabela button span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .GerarTabela button:after {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: #ffa500;
+            transition: all .35s;
+        }
+
+        .GerarTabela button:hover {
+            color: #fff;
+        }
+
+        .GerarTabela button:hover:after {
+            width: 100%;
+        }
+
+        table {
+            width: 60%;
+            font-size: 90%;
+            margin: auto;
+            margin-top: 100px;
+            border-collapse: separate;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th,
+        td {
+            padding: 15px;
+
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        th {
+            text-align: left;
+            background-color: #222844;
+        }
+
+        tr:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        td {
+            position: relative;
+            background-color: #385c80;
+        }
+
+        .excluir {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            font-family: sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #474747;
+            color: #f5f5f5;
+            border: 2px solid #333;
+            letter-spacing: 2px;
+            text-align: center;
+            position: relative;
+            transition: all .35s;
+        }
+
+        .excluir span {
+            position: relative;
+            z-index: 2;
+        }
+
+        .excluir:after {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: #ffa500;
+            transition: all .35s;
+        }
+
+        .excluir:hover {
+            color: #fff;
+        }
+
+        .excluir:hover:after {
+            width: 100%;
+        }
+
+        .rodape {
+            width: 100%;
+            position: fixed;
+            display: flex;
+            bottom: 0;
+            left: 0;
+            font-size: 0.8rem;
+            border: 2px solid #333;
+            justify-content: space-around;
+            height: 30px;
+            background-color: #474747;
+        }
+
+        .rodape a {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Gerador de Tabela Verdade</h1>
+    <main>
+        <article>
+            <label for="preposicao">Preposição</label>
+            <div class="seletor">
+                <select name="preposicao" id="preposicao">
+                    <option selected disabled>Selecione a Preposição</option>
+                    <option value="P">P</option>
+                    <option value="Q">Q</option>
+                    <option value="R">R</option>
+                </select>
+                <button class="adicionar ad-preposicao">+</button>
+            </div>
+        </article>
+
+        <article>
+            <label for="conectivo">Conectivo</label>
+            <div class="seletor">
+                <select name="conectivo" id="conectivo">
+                    <option selected disabled>Selecione o Conectivo</option>
+                    <option value="^">^ (E)</option>
+                    <option value="v">v (OU)</option>
+                    <option value="⊕">⊕ (Exclusivo)</option>
+                </select>
+                <button class="adicionar ad-conectivo">+</button>
+            </div>
+        </article>
+        <div class="visualização">
+            <div>
+                <input type="text" readonly class="progresso"></input>
+                <button class="excluir" onclick="Excluir()">
+                    <span>X</span>
+                </button>
+            </div>
+            <div class="GerarTabela">
+                <button class="GerarTabela btn-gerar-tabela">
+                    <span>Gerar Tabela Verdade<span>
+                </button>
+            </div>
+        </div>
+
+        <table class="tabela">
+            <thead class="cabecalho">
+            </thead>
+            <tbody class="resultado">
+            </tbody>
+        </table>
+
+    </main>
+
+    <footer class="rodape">
+        <a href="">Vinicius Cerqueira Oliveira</a>
+        <a href="">Tony Cleriston</a>
+        <a href="">Gabriel Torres</a>
+    </footer>
+
+
+    <script lang="javascript">
+        // linkando o html com o javascript
+        adPreposicao = document.querySelector(".adicionar.ad-preposicao");
+        resultado = document.querySelector(".resultado");
+        cabecalho = document.querySelector(".cabecalho");
+        adConectivo = document.querySelector(".adicionar.ad-conectivo");
+        preposicao = document.querySelector("#preposicao");
+        conectivo = document.querySelector("#conectivo");
+        edtProgresso = document.querySelector(".progresso");
+        btnGerarTabela = document.querySelector(".GerarTabela.btn-gerar-tabela");
+
+        //variavel que armazena as preposicoes e os conectivos que forem digitados
+        var digitados = [];
+
+        //variavel que armazena as preposicoes e os conectivos que forem digitados, mas sem repetições                
+        var digitadosNaoRepetidos = [];
+
+        // Limpa o valor do elemento "edtProgresso".
+        function Excluir() {
+            edtProgresso.value = "";
+
+        };
+
+        // Escuta o evento de click do botão gerar tabela
+        // Aqui tem algumas validações para vê é uma preposição valida
+        // Ele sempre limpa a tabela
+        // carrega as listas "digitadosNaoRepetidos" e "digitados"
+        // Chama o metodo que gera a tabela
+        btnGerarTabela.addEventListener("click", (event) => {
+            digitados = edtProgresso.value.split("")
+            digitadosNaoRepetidos = digitados.filter((item, index) => digitados.indexOf(item) === index);
+            cabecalho.innerHTML = "";
+            resultado.innerHTML = "";
+            if ((digitados.length % 2 === 0) || !(['P', 'Q', 'R'].includes(digitados[0]))) {
+                alert("Error ao gerar tabela verdade");
+            } else {
+                calcularTabelaVerdade();
+            }
+        });
+
+        // Validações e adiciona preposicao no edit
+        adPreposicao.addEventListener("click", (event) => {
+            if (edtProgresso.value.slice(-1) != "P" &&
+                edtProgresso.value.slice(-1) != "Q" &&
+                edtProgresso.value.slice(-1) != "R" &&
+                ["P", "Q", "R"].includes(preposicao.value)) {
+                edtProgresso.value = edtProgresso.value + preposicao.value
+            }
+
+        });
+
+        // Validações e adiciona conectivo no edit
+        adConectivo.addEventListener("click", (event) => {
+            if (edtProgresso.value.slice(-1) != "^" &&
+                edtProgresso.value.slice(-1) != "v" &&
+                edtProgresso.value.slice(-1) != "⊕" &&
+                edtProgresso.value.length > 0 &&
+                ["^", "v", "⊕"].includes(conectivo.value)) {
+                edtProgresso.value = edtProgresso.value + conectivo.value
+            }
+
+        });
+
+        //Inicialização dos objetos que representa os preposições
+        var preposicao1 = new Preposicao();
+        var preposicao2 = new Preposicao();
+        var preposicao3 = new Preposicao();
+
+        //Construtor das preposições
+        function Preposicao() {
+            this.tamIndice = 0;
+            this.preposicao = "";
+            this.lista = [];
+            this.vb = true;
+            this.count = 0;
+        }
+
+        //Calcula a tabela verdade
+        function calcularTabelaVerdade() {
+            //vejo quantas preposições tem na proposição que foi informada
+            var preposicoes = digitadosNaoRepetidos.
+                filter((item) => ["P", "Q", "R"].includes(item));
+
+            //calculando a quantidade de linhas que vai ter
+            var tamanho = 2 ** preposicoes.length;
+
+            //Carregando informações do objetos, como quando vai ser TRUE ou FALSE, e qual a preposição dele
+            preposicao1.tamIndice = tamanho / 2;
+            preposicao1.preposicao = preposicoes[0];
+
+            //Carregando informações do objetos, como quando vai ser TRUE ou FALSE, e qual a preposição dele
+            preposicao2.tamIndice = preposicao1.tamIndice / 2;
+            preposicao2.preposicao = preposicoes[1];
+
+            //Carregando informações do objetos, como quando vai ser TRUE ou FALSE, e qual a preposição dele
+            preposicao3.tamIndice = preposicao2.tamIndice / 2;
+            preposicao3.preposicao = preposicoes[2];
+
+            //criando as linhas da tabela
+            for (var i = 0; i < tamanho; i++) {
+                // inicializando as linhas
+                var row = [];
+
+                // pegando se a preoposicao vai ser TRUE ou FALSE, e adicionando na lista de row
+                preposicao1 = trueOrFalse(preposicao1);
+                row.push(preposicao1.lista[i]);
+
+                //Analisando se ele vai ter a preposicao 2, 
+                //pegando se a preoposicao vai ser TRUE ou FALSE, e adicionando na lista de row
+                if (preposicao2.tamIndice >= 1) {
+                    preposicao2 = trueOrFalse(preposicao2);
+                    row.push(preposicao2.lista[i]);
+                }
+
+                //Analisando se ele vai ter a preposicao 3,
+                //pegando se a preoposicao vai ser TRUE ou FALSE, e adicionando na lista de row
+                if (preposicao3.tamIndice >= 1) {
+                    preposicao3 = trueOrFalse(preposicao3);
+                    row.push(preposicao3.lista[i]);
+                }
+
+                // Parte para calcular o resultado das comparações
+                //o j + 2 é para pegar um par para comparar 
+                for (var j = 0; j < digitados.length - 1; j += 2) {
+                    // Se ele estiver no começo do for, vai fazer a comparação com:
+                    // o elemento atual, com o seguinte, com o seguinte do seguinte
+                    if (j === 0) {
+                        if (digitados[j + 1] === '^') {
+                            row.push(
+                                getPreposicao(digitados[j]).lista[i] &&
+                                getPreposicao(digitados[j + 2]).lista[i]
+                            );
+                        } else if (digitados[j + 1] === 'v') {
+
+                            row.push(
+                                getPreposicao(digitados[j]).lista[i] ||
+                                getPreposicao(digitados[j + 2]).lista[i]
+                            );
+                        } else if (digitados[j + 1] === '⊕') {
+                            row.push(
+                                getPreposicao(digitados[j]).lista[i] !=
+                                getPreposicao(digitados[j + 2]).lista[i]
+                            );
+                        }
+                    }
+                    // Se ele não estiver no começo do for, vai fazer a comparação com:
+                    // o resultado anterior, com o elemento seguinte, com o elemento seguinte do seguinte
+                    else {
+                        if (digitados[j + 1] === '^') {
+                            row.push(
+                                row[row.length - 1] &&
+                                getPreposicao(digitados[j + 2]).lista[i]
+                            );
+                        } else if (digitados[j + 1] === 'v') {
+                            row.push(
+                                row[row.length - 1] ||
+                                getPreposicao(digitados[j + 2]).lista[i]
+                            );
+                        } else if (digitados[j + 1] === '⊕') {
+                            row.push(
+                                row[row.length - 1] !=
+                                getPreposicao(digitados[j + 2]).lista[i]
+                            );
+                        }
+                    }
+                }
+                //Criacao do elemento para colocar na tabela, e substituir o true ou false por V ou F
+                var trElement = document.createElement("tr");
+                row.forEach((item, index) => trElement.innerHTML += `<td>${item ? 'V' : 'F'}</td>`)
+                resultado.appendChild(trElement);
+            }
+
+            // Cabecalho
+            // o q é uma variavel para saber quantas preposicoes tem
+            var q = 1;
+            // criando o elemento do cabecalho
+            var trElementHeader = document.createElement("tr");
+
+            // adicionando as preposicoes na cabecalho e vendo quantas preposicoes tem
+            trElementHeader.innerHTML += `<th>${preposicao1.preposicao}</th>`
+            if (preposicao2.tamIndice >= 1) {
+                q = 2;
+                trElementHeader.innerHTML += `<th>${preposicao2.preposicao}</th>`
+            }
+            if (preposicao3.tamIndice >= 1) {
+                q = 3;
+                trElementHeader.innerHTML += `<th>${preposicao3.preposicao}</th>`
+            }
+
+            // adicionando o cabecalho dos calculados
+            var j = 1
+            for (q; q < row.length; q++) {
+                j += 2;
+                trElementHeader.innerHTML += `<th>${edtProgresso.value.split("").slice(0, j).join("")}</th>`;
+            }
+            cabecalho.appendChild(trElementHeader);
+        }
+
+        //Serve para saber qual é objeto da preposicao
+        function getPreposicao(preposicao) {
+            if (preposicao1.preposicao === preposicao) {
+                return preposicao1
+            } else if (preposicao2.preposicao === preposicao) {
+                return preposicao2
+            } else if (preposicao3.preposicao === preposicao) {
+                return preposicao3
+            }
+            return null;
+        }
+
+        //Serve para saber quanda preposicao vai ser TRUE ou FALSE
+        function trueOrFalse(obj) {
+            if (obj.tamIndice === obj.count) {
+                obj.count = 0;
+                obj.vb = !obj.vb;
+            }
+            obj.lista.push(obj.vb);
+            obj.count++;
+            return obj;
+        }        
+    </script>
+</body>
+</html>
